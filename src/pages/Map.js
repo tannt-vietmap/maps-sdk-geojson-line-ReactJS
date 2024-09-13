@@ -34,6 +34,7 @@ class Map extends Component {
           },
         },
       });
+      //add polyline
       app.map.addLayer({
         id: "route",
         type: "line",
@@ -47,6 +48,30 @@ class Map extends Component {
           "line-width": 8,
         },
       });
+
+      //add arrow
+      var url = 'https://i.imgur.com/LcIng3L.png';
+      app.map.loadImage(url, function(err, image) {
+        if (err) {
+          console.error('err image', err);
+          return;
+        }
+        app.map.addImage('arrow', image);
+        app.map.addLayer({
+          'id': 'arrow-layer',
+          'type': 'symbol',
+          'source': 'route',
+          'layout': {
+            'symbol-placement': 'line',
+            'symbol-spacing': 1,
+            'icon-allow-overlap': true,
+            // 'icon-ignore-placement': true,
+            'icon-image': 'arrow',
+            'icon-size': 0.045,
+            'visibility': 'visible'
+          }
+        });
+      })
     });
   }
   componentDidMount() {
